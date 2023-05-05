@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Translate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 0;
+      padding: 1em;
+      background-color: #4285f4;
+      color: white;
+    }
+
+    form {
+      padding: 1em;
+      background-color: #f2f2f2;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      border: none;
+      border-radius: 3px;
+      background-color: #4285f4;
+      color: white;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #357ae8;
+    }
+
+    #result {
+      padding: 1em;
+      margin-top: 1em;
+      background-color: #e6e6e6;
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Translate</h1>
+  <br />
+  <mark>jika hasil tidak keluar, silahkan translate kembali </mark>
+  <br />
+  <form>
+    <label for="from">From:</label>
+    <input type="text" id="from" name="from" placeholder="Enter source language code (e.g., en)">
+    <label for="to">To:</label>
+    <input type="text" id="to" name="to" placeholder="Enter target language code (e.g., id)">
+    <label for="text">Text:</label>
+    <input type="text" id="text" name="text" placeholder="Enter text to translate">
+    <button type="submit">Translate</button>
+  </form>
+  <div id="result"></div>
+  <script>
+    const form = document.querySelector('form');
+    const result = document.querySelector('#result');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const url = `/translate?${new URLSearchParams(new FormData(form))}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      result.innerText = data.translated_text;
+    });
+  </script>
+</body>
+
+</html>
